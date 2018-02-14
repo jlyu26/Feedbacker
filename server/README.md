@@ -45,3 +45,11 @@ When some arbitary changes are made, after making sure changes are saved:
 2. `$ git add .` to add the file that will be committed
 3. commit the file by using `$ git commit -m "commit message"` 
 4. `$ git push heroku master` to put the change to heroku.
+
+**4. Google OAuth Authentication with Passport.js**
+
+<img width="513" alt="oauth-flow" src="https://user-images.githubusercontent.com/20265633/36182706-f4c88b14-10f8-11e8-9b8e-802655dfc6ee.PNG">
+
+One key point is to securely store Google OAuth private token secret inside project and make sure not accidently push it to Github.
+
+Need to properly set up account to say `http://localhost:5050` is valid to redirect users to, otherwise will get an **redirect_uri_mismatch** error. Add 'http://localhost:5000/auth/google/callback' to "Authorized redirect URIs" in credentials.
