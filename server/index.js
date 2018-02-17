@@ -1,35 +1,17 @@
 const express = require('express');	// import Express library
-const passport = require('passport');
-const GoogleStrategy = require('passport-google-oauth20').Strategy;
-const keys = require('./config/keys')
+const mongoose = require('mongoose');
+const keys = require('./config/keys');
+// the order of require statement can cause error in application!
+require('./models/User');
+require('./services/passport');
+
+mongoose.connect(keys.mongoURI);
 
 const app = express();
-
-passport.use(
-	new GoogleStrategy({
-		clientID: keys.googleClientID,
-		clientSecret: keys.googleClientSecret,
-		callbackURL: '/auth/google/callback'
-	}, (accessToken, refreshToken, profile, done) => {
-		console.log('Access Token: ', accessToken);
-		console.log('Refresh Token: ', refreshToken);
-		console.log('Profile: ', profile);
-	})
-);
-
-// GoogleStrategy has an internal identifier of 'google', and
-// that's how passport knows to take the string and go to find the
-// strategy that has been already wired up to it.
-// the scope specifies to Google service what access we
-// want to have inside of this user's profile.
-app.get(
-	'/auth/google', 
-	passport.authenticate('google', {
-		scope: ['profile', 'email']
-	})
-);
-
-app.get('/auth/google/callback', passport.authenticate('google'));
+require('./routes/authRoutes')(app);
+// equals to:
+// const authRoutes = require('./routes/authRoutes');
+// authRoutes(app);
 
 // Dynamic port binding:
 // in production environment || development environment 5000 by default

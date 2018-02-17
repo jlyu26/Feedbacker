@@ -1,6 +1,6 @@
 ## Server Side of Feedbacker
 
-**1. CommonJS Modules**
+### 1. CommonJS Modules
 
 CommonJS modules is a system implemented in Node.js for requiring/sharing code between different files. We use CommonJS modules in server side of the application while ES6 modules in front-end.
 
@@ -12,7 +12,7 @@ const express = require('express');
 import React from 'react';
 ```
 
-**2. Handle HTTP Request using Express**
+### 2. Handle HTTP Request using Express
 
 <img width="446" alt="tech-express-route-handler" src="https://user-images.githubusercontent.com/20265633/36118590-91082d02-100b-11e8-8f28-0aefd376e8b3.PNG">
 
@@ -25,7 +25,15 @@ app.get('/', (req, res) => {
 app.listen(PORT);
 ```
 
-**3. Deploy Application Using [Heroku](https://www.heroku.com/)**
+**Theory of Authentication:**
+
+The application communicate between browser and Express web server by HTTP request, and **HTTP is stateless** (Ajax is HTTP request). To solve this, after user logged in, server respond cookie/token/whatever that contains the identifying information that is unique to the user together inside the request that gets sent back to browser. On any follow up request that browser ever makes to the server, we're going to include that identifying information, so that server can check if the request is from the same person that made the origional login request.
+
+**Cookie Based Authentication:**
+
+
+
+### 3. Deploy Application Using [Heroku](https://www.heroku.com/)
 
 **Pre deployment checklist and Deployment process:**
 
@@ -46,10 +54,13 @@ When some arbitary changes are made, after making sure changes are saved:
 3. commit the file by using `$ git commit -m "commit message"` 
 4. `$ git push heroku master` to put the change to heroku.
 
-**4. Google OAuth Authentication with Passport.js**
+### 4. Google OAuth Authentication with Passport.js
 
 <img width="513" alt="oauth-flow" src="https://user-images.githubusercontent.com/20265633/36182706-f4c88b14-10f8-11e8-9b8e-802655dfc6ee.PNG">
 
 One key point is to securely store Google OAuth private token secret inside project and make sure not accidently push it to Github.
 
-Need to properly set up account to say `http://localhost:5050` is valid to redirect users to, otherwise will get an **redirect_uri_mismatch** error. Add 'http://localhost:5000/auth/google/callback' to "Authorized redirect URIs" in credentials.
+Need to properly set up account to say `http://localhost:5050` is valid to redirect users to, otherwise will get an **redirect_uri_mismatch** error. Add `http://localhost:5000/auth/google/callback` to "Authorized redirect URIs" in credentials.
+
+### 5. MongoDB and Mongoose
+
