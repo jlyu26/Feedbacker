@@ -1,5 +1,9 @@
-module.exports = {
-	googleClientID: '933347724436-46v05entgot0qgg7gc4j8clqa1i1tfeo.apps.googleusercontent.com',
-	googleClientSecret: '_RijJIZXMgGSNSXiNGdta4X3',
-	mongoURI: 'mongodb://jinyan:password@ds235778.mlab.com:35778/feedbacker-dev'
-};
+// keys.js - figure out what set of credentials to return
+
+if (process.env.NODE_ENV === 'production') {	// automaticaly on Heroku
+	// we are in production - return the prod set of keys
+	module.exports = require('./prod');
+} else {
+	// we are in development - return the dev set of keys
+	module.exports = require('./dev');
+}

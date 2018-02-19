@@ -8,7 +8,7 @@ CommonJS modules is a system implemented in Node.js for requiring/sharing code b
 // import Express library in CommonJS modules
 const express = require('express');
 
-//	import React library in ES2015/ES6 modules
+// import React library in ES2015/ES6 modules
 import React from 'react';
 ```
 
@@ -63,4 +63,14 @@ One key point is to securely store Google OAuth private token secret inside proj
 Need to properly set up account to say `http://localhost:5050` is valid to redirect users to, otherwise will get an **redirect_uri_mismatch** error. Add `http://localhost:5000/auth/google/callback` to "Authorized redirect URIs" in credentials.
 
 ### 5. MongoDB and Mongoose
+
+### 6. Difference between express-session and cookie-session?
+
+### 7. Two Sets of Resources for Production and Development Environment
+
+<img width="638" alt="development-production-2-sets" src="https://user-images.githubusercontent.com/20265633/36361386-6567208e-14f9-11e8-85f2-041b949e6315.PNG">
+
+There are two reasons to have a complete separate and different set of keys for production environment (Heroku deployment). First, in case of the physical laptop got stolen or someone else somehow have direct access to the keys (which is plain text file). Second, it allows us to have two separate Mongo databases. In production environment, we want to have a clean database that contains only users data that we never manually ness around with. But in development environment we can add/delete records or collections and change everything we want. 
+
+### 8. HTTP and HTTPS
 
