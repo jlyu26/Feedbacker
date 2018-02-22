@@ -12,6 +12,7 @@ const express = require('express');
 import React from 'react';
 ```
 
+
 ### 2. Handle HTTP Request using Express
 
 <img width="446" alt="tech-express-route-handler" src="https://user-images.githubusercontent.com/20265633/36118590-91082d02-100b-11e8-8f28-0aefd376e8b3.PNG">
@@ -32,10 +33,11 @@ The application communicate between browser and Express web server by HTTP reque
 **Cookie Based Authentication:**
 
 
+### 3. Deploy Application Using Heroku
 
-### 3. Deploy Application Using [Heroku](https://www.heroku.com/)
+[Document](https://devcenter.heroku.com/categories/deployment)
 
-**Pre deployment checklist and Deployment process:**
+Pre deployment checklist and Deployment process:
 
 <img width="625" alt="tech-deployment-checklist-1" src="https://user-images.githubusercontent.com/20265633/36135220-bd2738be-1057-11e8-8ef2-8f89691111e2.PNG">
 
@@ -46,7 +48,7 @@ Running on windows, first step is to login local Heroku cli in cmd `heroku login
 3. Take the code we have committed to local repository and push the master branch to the heroku repository: `git push heroku master`
 3. To see whether application deployment success: `heroku open`
 
-**Subsequent Deploys:**
+Subsequent Deploys:
 
 When some arbitary changes are made, after making sure changes are saved:
 1. use `$ git status` to check changes
@@ -54,23 +56,28 @@ When some arbitary changes are made, after making sure changes are saved:
 3. commit the file by using `$ git commit -m "commit message"` 
 4. `$ git push heroku master` to put the change to heroku.
 
+
 ### 4. Google OAuth Authentication with Passport.js
 
 <img width="513" alt="oauth-flow" src="https://user-images.githubusercontent.com/20265633/36182706-f4c88b14-10f8-11e8-9b8e-802655dfc6ee.PNG">
 
 One key point is to securely store Google OAuth private token secret inside project and make sure not accidently push it to Github.
 
-Need to properly set up account to say `http://localhost:5050` is valid to redirect users to, otherwise will get an **redirect_uri_mismatch** error. Add `http://localhost:5000/auth/google/callback` to "Authorized redirect URIs" in credentials.
+Need to properly set up account to say `http://localhost:5050` is valid to redirect users to, otherwise will get an 'redirect_uri_mismatch' error. Add `http://localhost:5000/auth/google/callback` to 'Authorized redirect URIs' in credentials.
+
 
 ### 5. MongoDB and Mongoose
 
+
 ### 6. Difference between express-session and cookie-session?
+
 
 ### 7. Two Sets of Resources for Production and Development Environment
 
 <img width="638" alt="development-production-2-sets" src="https://user-images.githubusercontent.com/20265633/36361386-6567208e-14f9-11e8-85f2-041b949e6315.PNG">
 
 There are two reasons to have a complete separate and different set of keys for production environment (Heroku deployment). First, in case of the physical laptop got stolen or someone else somehow have direct access to the keys (which is plain text file). Second, it allows us to have two separate Mongo databases. In production environment, we want to have a clean database that contains only users data that we never manually ness around with. But in development environment we can add/delete records or collections and change everything we want. 
+
 
 ### 8. HTTP and HTTPS
 
