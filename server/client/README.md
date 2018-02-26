@@ -8,7 +8,7 @@ Redux store is where all app state exists to determine current state or to chang
 
 Inside index.js file we create a Redux store and also we render a `<Provider>` tag. The `<Provider>` tag is a React component that is provided by React-Redux library, and we can consider this like the glue between React and Redux side of application. Because the `<Provider>` tag is the **very parent component** of application, any other component that we create can reach directly into the Redux store and pull out states.
 
-```javascript
+```jsx
 const store = createStore(() => [], {}, applyMiddleware());
 
 ReactDom.render(
@@ -17,4 +17,33 @@ ReactDom.render(
 );
 ```
 
-### 2. 
+### 2. Webpack and Materialize
+
+<img width="197" alt="webpack" src="https://user-images.githubusercontent.com/20265633/36645147-91d08f82-1a32-11e8-90ed-93236f976526.PNG">
+
+Webpack is a **module loader**, which allows us to take separate JavaScript files and condense it down to one individual file. And it's not only limited to processing JavaScript files, but can also load up 'loaders' into webpack that instruct webpack how to handle other types of files as well, in particular CSS files that come with create-react-app installation. So if we import a CSS file (Materialize in this case) directly into a JavaScript file, webpack will look at the import statement and recognize that we are attempting to import in a CSS file, and it will include the file into our project output as CSS rather than trying to parse it as raw JavaScript (which is exactly what we need).
+
+```jsx
+import 'materialize-css/dist/css/materialize.min.css';
+```
+
+More information about webpack refer to [[document]](https://webpack.js.org/). 
+
+Also, Materialize here refers to Materialize CSS [[Document]](http://materializecss.com/getting-started.html). There's another library called Material-UI [[Document]](http://www.material-ui.com/). The different between them is Materialize CSS use vanilla CSS to style components while Material-UI use JSX.
+
+### 3. Communication between React and Server
+
+<img width="269" alt="react-server-communication" src="https://user-images.githubusercontent.com/20265633/36645970-ea0c9ab8-1a3e-11e8-99de-1dfd0e529df7.PNG">
+
+Axios [Github](https://github.com/axios/axios) is responsible for helping us making API/Ajax requests to back-end API. And Redux Thunk [Github](https://github.com/gaearon/redux-thunk) helps us to maintain/make asynchronous action creators behave the way we expect, by passing an action to 'dispatch function' to manually dispatch that action at any time that we wish, while vanilla Redux expects any action creator that we call will instantly and immediately return an action.
+
+<img width="645" alt="react-redux-flow - comparison" src="https://user-images.githubusercontent.com/20265633/36647527-ec587ab0-1a54-11e8-8c21-26481af8af94.PNG">
+
+### 4. Two Ways to Logout and Navigate
+
+<img width="275" alt="logout-two-ways" src="https://user-images.githubusercontent.com/20265633/36652941-fd18d838-1a7f-11e8-9fe2-2d3ea92014c3.PNG">
+
+To handle logout using traditional browser behavior (using `<a href="">` and HTTP request) is much easier to take care of. However, the benefit of handle the logout within the context of React and Redux side is that it would be a **much faster process**. Because the browser is not changing HTML documents, just make a single Ajax request, when we get the response just tell the Redux side of everything to update itself.
+
+<img width="265" alt="navigation-two-ways" src="https://user-images.githubusercontent.com/20265633/36653574-ff6fde2a-1a83-11e8-8008-e239247c5594.PNG">
+
