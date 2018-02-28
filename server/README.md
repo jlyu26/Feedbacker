@@ -2,7 +2,7 @@
 
 ### 1. CommonJS Modules
 
-CommonJS modules is a system implemented in Node.js for requiring/sharing code between different files. We use CommonJS modules in server side of the application while ES6 modules in front-end.
+CommonJS modules is a system implemented in Node.js for requiring/sharing code between different files. We use CommonJS modules in server side of the application while ES6 modules in front-end. In CommonJS modules with `require` statements, we can have some logic executed **before** we decide what file to require in, which is not allowed in ES6 modules. So in front-end of the application, to custom environment variables that need filter (such as publish/secret keys), use create-react-app [[Document]](https://github.com/facebook/create-react-app/blob/master/packages/react-scripts/template/README.md#adding-custom-environment-variables).
 
 ```javascript
 // import Express library in CommonJS modules

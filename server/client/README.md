@@ -29,13 +29,13 @@ import 'materialize-css/dist/css/materialize.min.css';
 
 More information about webpack refer to [[document]](https://webpack.js.org/). 
 
-Also, Materialize here refers to Materialize CSS [[Document]](http://materializecss.com/getting-started.html). There's another library called Material-UI [[Document]](http://www.material-ui.com/). The different between them is Materialize CSS use vanilla CSS to style components while Material-UI use JSX.
+Also, Materialize here refers to **Materialize CSS** [[Document]](http://materializecss.com/getting-started.html). There's another library called Material-UI [[Document]](http://www.material-ui.com/). The different between them is Materialize CSS use vanilla CSS to style components while Material-UI use JSX.
 
 ### 3. Communication between React and Server
 
 <img width="269" alt="react-server-communication" src="https://user-images.githubusercontent.com/20265633/36645970-ea0c9ab8-1a3e-11e8-99de-1dfd0e529df7.PNG">
 
-Axios [Github](https://github.com/axios/axios) is responsible for helping us making API/Ajax requests to back-end API. And Redux Thunk [Github](https://github.com/gaearon/redux-thunk) helps us to maintain/make asynchronous action creators behave the way we expect, by passing an action to 'dispatch function' to manually dispatch that action at any time that we wish, while vanilla Redux expects any action creator that we call will instantly and immediately return an action.
+**Axios** [Github](https://github.com/axios/axios) is responsible for helping us making API/Ajax requests to back-end API. And **Redux Thunk** [Github](https://github.com/gaearon/redux-thunk) helps us to maintain/make asynchronous action creators behave the way we expect, by passing an action to 'dispatch function' to manually dispatch that action at any time that we wish, while vanilla Redux expects any action creator that we call will instantly and immediately return an action.
 
 <img width="645" alt="react-redux-flow - comparison" src="https://user-images.githubusercontent.com/20265633/36647527-ec587ab0-1a54-11e8-8c21-26481af8af94.PNG">
 
@@ -46,4 +46,25 @@ Axios [Github](https://github.com/axios/axios) is responsible for helping us mak
 To handle logout using traditional browser behavior (using `<a href="">` and HTTP request) is much easier to take care of. However, the benefit of handle the logout within the context of React and Redux side is that it would be a **much faster process**. Because the browser is not changing HTML documents, just make a single Ajax request, when we get the response just tell the Redux side of everything to update itself.
 
 <img width="265" alt="navigation-two-ways" src="https://user-images.githubusercontent.com/20265633/36653574-ff6fde2a-1a83-11e8-8008-e239247c5594.PNG">
+
+### 5. Billing
+
+Considerations:
+
+We as developers are bad at security
+
+- Never accept raw credit card numbers
+- Never store credit card numbers
+- Always use an outside payment processor (like [Stript](https://stripe.com/) in this project)
+
+Billing is hard
+
+- Possible to avoid monthly payments/multiple plans?
+- Fraud and chargebacks are a pain
+
+The plugin to use in front-end form to exchange information with stripe API [[Document]](https://www.npmjs.com/package/stripe#documentation) is [[checkout.js library]](https://stripe.com/checkout). However, as this project is being developed, checkout's support of React is not as well as Angular, so we use [[React Stripe Checkout]](https://github.com/azmenak/react-stripe-checkout) component to make checkout.js work nicely with React.
+
+Stript workflow:
+
+<img width="278" alt="stripe-workflow" src="https://user-images.githubusercontent.com/20265633/36772291-a4055556-1c22-11e8-8497-e9eaf7e68189.PNG">
 
