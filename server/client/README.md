@@ -68,3 +68,6 @@ Stript workflow:
 
 <img width="278" alt="stripe-workflow" src="https://user-images.githubusercontent.com/20265633/36772291-a4055556-1c22-11e8-8497-e9eaf7e68189.PNG">
 
+Require login:
+
+<img width="558" alt="express-how-it-works" src="https://user-images.githubusercontent.com/20265633/36811321-5632001c-1c9b-11e8-84f3-bb2b5d8cbf21.PNG">

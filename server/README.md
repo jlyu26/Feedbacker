@@ -56,6 +56,17 @@ When some arbitary changes are made, after making sure changes are saved:
 3. commit the file by using `$ git commit -m "commit message"` 
 4. `$ git push heroku master` to put the change to heroku.
 
+Dev/Prod Mode:
+
+<img width="484" alt="why-two-server-structure" src="https://user-images.githubusercontent.com/20265633/36815992-8a96e2b4-1caa-11e8-9c6d-0167bb54098c.PNG">
+
+Before deploy to Heroku, we need to **build** the project first. There are three options as listed below. Most industrial developments chose the third option, in which we make use of a third party **CI (Continuous Integration) server**, a server that has the ability to run tests or checks [[example]](http://circleci.com/docs/2.0/tutorials/), any task over the codebase, to actually build the application. However in this project, we go with the second option because we have no test cases and option three is overkill.
+
+When deploying to Heroku, make sure remove `client/build` from gitignore under **server** folder.
+
+<img width="370" alt="heroku-deployment-options" src="https://user-images.githubusercontent.com/20265633/36817160-29fdd238-1cae-11e8-9ad9-6bc3bd090a45.PNG">
+
+[[Heroku build process document]](https://devcenter.heroku.com/articles/nodejs-support#customizing-the-build-process)
 
 ### 4. Google OAuth Authentication with Passport.js
 
@@ -68,6 +79,29 @@ Need to properly set up account to say `http://localhost:5050` is valid to redir
 
 ### 5. MongoDB and Mongoose
 
+Mongoose for Survey Creation:
+
+Why use subdocument collection for recipients, but separate collection for surveys (diagram below)?
+
+<img width="630" alt="survey-model" src="https://user-images.githubusercontent.com/20265633/36826611-8d7e18d0-1cdc-11e8-85e4-787413261b54.PNG">
+
+There's a very practical reason for this structure. In MongoDB, we refer to each of the records inside of a collection as a **document** (e.g. `User` is a document inside `User Collection`). The size limit for a single record is 4MB. So all the data inside of a `Survey` can only be up to 4MB. An average length of email address (20 characters) is around 20 bytes, so a single survey can only store 200,000 email addresses, which in most case is not a problem. However, if we make `Survey` as subdocument of `User`, as `User` itself has a limitation of 4MB, a user can only send out 200,000 emails worth of surveys, and that would be a very bad scenario.
+
+Survey Workflow and Routes:
+
+<img width="555" alt="survey-workflow-and-routes" src="https://user-images.githubusercontent.com/20265633/36863442-af7244ae-1d57-11e8-9697-cdad1630c231.PNG">
+
+Email Approach:
+
+<img width="550" alt="email-approach" src="https://user-images.githubusercontent.com/20265633/36864128-bea54f5a-1d59-11e8-8185-ffc5698c5b42.PNG">
+
+Question: As in the above diagram, to batch all recipient's mailers into one mailer object and send in one request, we use the same template instance for all recipients, in another word everyone gets the exact same email with the same link of Yes/No (not able to customize link for different email address), so how can we track/record who clicked the link?
+
+Solution: via email provider: [[SendGrid]](https://sendgrid.com/), with npm nodule [sendgrid](https://www.npmjs.com/package/sendgrid).
+
+<img width="303" alt="email-sendgrid" src="https://user-images.githubusercontent.com/20265633/36866122-69c4d37e-1d5f-11e8-93e6-4ae9197c2305.PNG">
+
+The process that SendGrid sends message back to our server is referred to as **Webhook**.
 
 ### 6. Difference between express-session and cookie-session?
 
@@ -77,7 +111,3 @@ Need to properly set up account to say `http://localhost:5050` is valid to redir
 <img width="638" alt="development-production-2-sets" src="https://user-images.githubusercontent.com/20265633/36361386-6567208e-14f9-11e8-85f2-041b949e6315.PNG">
 
 There are two reasons to have a complete separate and different set of keys for production environment (Heroku deployment). First, in case of the physical laptop got stolen or someone else somehow have direct access to the keys (which is plain text file). Second, it allows us to have two separate Mongo databases. In production environment, we want to have a clean database that contains only users data that we never manually ness around with. But in development environment we can add/delete records or collections and change everything we want. 
-
-
-### 8. HTTP and HTTPS
-
