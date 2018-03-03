@@ -64,10 +64,53 @@ Billing is hard
 
 The plugin to use in front-end form to exchange information with stripe API [[Document]](https://www.npmjs.com/package/stripe#documentation) is [[checkout.js library]](https://stripe.com/checkout). However, as this project is being developed, checkout's support of React is not as well as Angular, so we use [[React Stripe Checkout]](https://github.com/azmenak/react-stripe-checkout) component to make checkout.js work nicely with React.
 
-Stript workflow:
+Stripe workflow:
 
 <img width="278" alt="stripe-workflow" src="https://user-images.githubusercontent.com/20265633/36772291-a4055556-1c22-11e8-8497-e9eaf7e68189.PNG">
 
 Require login:
 
 <img width="558" alt="express-how-it-works" src="https://user-images.githubusercontent.com/20265633/36811321-5632001c-1c9b-11e8-84f3-bb2b5d8cbf21.PNG">
+
+### 6. Create Survey Form Using Redux Form
+
+<img width="257" alt="form-reducer" src="https://user-images.githubusercontent.com/20265633/36884840-5c7837f4-1db1-11e8-9a6e-3d3c326fa80e.PNG">
+
+`reduxForm` function allows Redux form to communicate with Redux store. It takes care of calling action creators, pulling data out of store and provide it to other components, so Redux form does have the ability to communicate to the Redux store at top of the application. 
+
+<img width="335" alt="survey-client-structure" src="https://user-images.githubusercontent.com/20265633/36886262-7910fa10-1db9-11e8-8bda-576a1f378dd7.PNG">
+
+The usage of `reduxForm` to connect component and store looks similar to `connect` from react-redux library. Validation with Redux form, use `validate: validateFunction` inside.
+
+```jsx
+export default reduxForm({
+	validate,
+	form: 'surveyForm'
+})(SurveyForm);
+``` 
+
+To validate a single email address, use regular expression in [[emailregex.com]](http://emailregex.com/).
+
+### 7. Toggling Visibility
+
+<img width="307" alt="toggling-visibility" src="https://user-images.githubusercontent.com/20265633/36929055-e8b022ba-1e59-11e8-9a9c-1a82ae2aaae1.PNG">
+
+There are three ways to determine which component to show:
+
+(1) Separate route
+
+Pros: Clear implementation, easy to change the review component, easy and straightforward.
+
+Cons: If user visit the url directly without entering any information onto the form, the user will probably be presented an empty page or empty form. To avoid this scenario, extra logic is needed.
+
+(2) Redux
+
+Have some 'flag' (action creator or reducer) inside of Redux store, and whenever user click 'continue' button, based on that piece of state inside of Redux store, determine whether user could be processed to review.
+
+Cons: Make action creator, reducer, etc, which takes a lot of extra code to implement.
+
+(3) Component State
+
+Add a piece of **component level state** to `SurveyNew` component. If `true` show `SurveyFormView`, if `false` show `SurveyForm`. We can update the piece of state by passing a callback into `SurveyForm` and a callback into `SurveyFormView`, and both callbacks would essentially toggle the boolean value, and allow user to navigate back and forth. 
+
+And as long as no other component in this application cares about whether it's `SurveyNew` or `SurveyFormView` the user is looking at, so other than Redux state, we would use component level state in this case.
