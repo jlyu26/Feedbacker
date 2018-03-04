@@ -74,7 +74,7 @@ When deploying to Heroku, make sure remove `client/build` from gitignore under *
 
 One key point is to securely store Google OAuth private token secret inside project and make sure not accidently push it to Github.
 
-Need to properly set up account to say `http://localhost:5050` is valid to redirect users to, otherwise will get an 'redirect_uri_mismatch' error. Add `http://localhost:5000/auth/google/callback` to 'Authorized redirect URIs' in credentials.
+Need to properly set up account to say `http://localhost:5000` is valid to redirect users to, otherwise will get an 'redirect_uri_mismatch' error. Add `http://localhost:5000/auth/google/callback` to 'Authorized redirect URIs' in credentials.
 
 
 ### 5. MongoDB and Mongoose
@@ -103,10 +103,25 @@ Solution: via email provider: [[SendGrid]](https://sendgrid.com/), with npm nodu
 
 The process that SendGrid sends message back to our server is referred to as **Webhook**.
 
-### 6. Difference between express-session and cookie-session?
+### 6. Webhooks in Development
+
+The lifecycle of a webhook inside of this application:
+
+<img width="209" alt="webhook-by-sendgrid" src="https://user-images.githubusercontent.com/20265633/36930878-b8c1bd42-1e78-11e8-83a0-612b4b7dcd85.PNG">
+
+Webhook in development environment is more complicated than production environment, as SendGrid doesn't have the ability to reach out directly to a very particular laptop and make a POST request to our running development server.
+
+<img width="493" alt="webhook-in-production-and-development" src="https://user-images.githubusercontent.com/20265633/36930992-fbb9ced0-1e7a-11e8-801d-a63d89243a72.PNG">
+
+That's why we need [[Localtunnel]](https://github.com/localtunnel/localtunnel). So whenever SendGrid makes a POST request to our local server, instead, the POST request is sent to `localtunnel.com` API service. And we're going to tell `localtunnel.com` that if they ever receive a POST request to the sub-domain of like `webhookhelper.localtunnel.com`, then they should take that request and automatically forward it onto a Localtunnel's server that is running on local development laptop. We will the tell the local server to forward the request onto `localhost:5000`.
+
+<img width="410" alt="webhook-with-localtunnel" src="https://user-images.githubusercontent.com/20265633/36931258-2913784a-1e80-11e8-837c-e7085b41600c.PNG">
 
 
-### 7. Two Sets of Resources for Production and Development Environment
+### 7. Difference between express-session and cookie-session?
+
+
+### 8. Two Sets of Resources for Production and Development Environment
 
 <img width="638" alt="development-production-2-sets" src="https://user-images.githubusercontent.com/20265633/36361386-6567208e-14f9-11e8-85f2-041b949e6315.PNG">
 
