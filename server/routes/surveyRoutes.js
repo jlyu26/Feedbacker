@@ -10,7 +10,14 @@ const surveyTemplate = require('../services/emailTemplates/surveyTemplate');
 const Survey = mongoose.model('surveys');
 
 module.exports = (app) => {
-	app.get('/api/surveys/:surveyId/:choice', (req, res) => {
+	app.get('/api/surveys', requireLogin, async (req, res) => {	// pull the list of surveys created by current user out of database
+		const surveys = await Survey.find({ _user: req.user.id })	// returns a query object of mongoose
+			.select({ recipients: false });	// exclude `recipients` list which could be very big
+
+		res.send(surveys);
+	});
+
+	app.get('/api/surveys/:surveyId/:choice', (req, res) => {	// in production environment remove '/' before 'api/...'
 		res.send('Thanks for your feedback!');
 	});
 

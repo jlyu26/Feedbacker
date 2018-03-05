@@ -87,6 +87,8 @@ Why use subdocument collection for recipients, but separate collection for surve
 
 There's a very practical reason for this structure. In MongoDB, we refer to each of the records inside of a collection as a **document** (e.g. `User` is a document inside `User Collection`). The size limit for a single record is 4MB. So all the data inside of a `Survey` can only be up to 4MB. An average length of email address (20 characters) is around 20 bytes, so a single survey can only store 200,000 email addresses, which in most case is not a problem. However, if we make `Survey` as subdocument of `User`, as `User` itself has a limitation of 4MB, a user can only send out 200,000 emails worth of surveys, and that would be a very bad scenario.
 
+Also, when fetching the surveys list created by a particular user to generate feedback percentage in dashboard, the surveys object should exclude the `recipients` list because it has nothing to do with percentage and could be very big.
+
 Survey Workflow and Routes:
 
 <img width="555" alt="survey-workflow-and-routes" src="https://user-images.githubusercontent.com/20265633/36863442-af7244ae-1d57-11e8-9697-cdad1630c231.PNG">
@@ -102,6 +104,7 @@ Solution: via email provider: [[SendGrid]](https://sendgrid.com/), with npm nodu
 <img width="303" alt="email-sendgrid" src="https://user-images.githubusercontent.com/20265633/36866122-69c4d37e-1d5f-11e8-93e6-4ae9197c2305.PNG">
 
 The process that SendGrid sends message back to our server is referred to as **Webhook**.
+
 
 ### 6. Webhooks in Development
 
