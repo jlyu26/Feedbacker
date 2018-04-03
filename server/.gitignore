@@ -1,0 +1,8 @@
+# server
+node_modules
+dev.js
+
+# client
+client/etc
+client/node_modules
+client/build
