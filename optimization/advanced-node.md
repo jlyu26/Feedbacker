@@ -14,7 +14,7 @@ Whenever we start a node program on computer, node automatically creates one thr
 
 Pseudocode that mocks event loop:
 
-```
+```JavaScript
 const pendingTimers = [];
 const pendingOSTasks = [];
 const pendingOperations = [];
@@ -52,8 +52,39 @@ while(shouldContinue()) {
 
 ```
 
-Question: Is Node single threaded?
+### Is Node single threaded?
 
-Answer: Node event loop is single threaded, but some of Node frameworks/stdlib are not. (see [threads.js](threads.js))
+Node event loop is single threaded, but some of Node frameworks/stdlib are not. (see [threads.js](threads.js) and [async.js](async.js))
 
 <img width="285" alt="pbkdf2-pipline" src="https://user-images.githubusercontent.com/20265633/38264132-1b28b67c-3740-11e8-9151-f087e63a5cbc.PNG">
+
+Thread pool questions:
+
+Q: Can we use the thread pool for JavaScript code or can only NodeJS functions use it?
+
+A: We can write custon JavaScript that uses the thread pool.
+
+Q: What functions in Node std library use the thread pool?
+
+A: All 'fs' module functions. Some crypto stuff. Depends on operating systems. (Win vs Unix based)
+
+Q: How does this thread pool stuff fit into the event loop?
+
+A: Tasks running in the stread pool are the 'pendingOperations' in the pseudocode example.
+
+<img width="280" alt="async-pipline" src="https://user-images.githubusercontent.com/20265633/38267205-c58bc98a-3748-11e8-8e87-fb1bd0bbc605.PNG">
+
+OS/Async questions:
+
+Q: What functions in Node std library use the OS's async features?
+
+A: Almost everything around networking for all OS's. Some other stuff is OS specific.
+
+Q: How does this OS async stuff fit into the event loop?
+
+A: Tasks using the underlying OS are reflected in the 'pendingOSTasks' array in pseudocode example.
+
+### Improving Node Performance
+
+1. Use Node in 'Cluster' Mode -- Recommended
+2. Use Worker Threads -- Experimental

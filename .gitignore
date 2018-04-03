@@ -6,3 +6,6 @@ server/config/dev.js
 client/etc
 client/node_modules
 client/public
+
+# optimization
+optimization/node_modules
