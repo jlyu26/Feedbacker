@@ -88,3 +88,5 @@ A: Tasks using the underlying OS are reflected in the 'pendingOSTasks' array in 
 
 1. Use Node in 'Cluster' Mode -- Recommended
 2. Use Worker Threads -- Experimental
+
+Due to the number limitation of logical CPU cores, in clustering mode, it's not like 'the more children the better'. Use **pm2** ([GitHub](https://github.com/Unitech/pm2)) to take care of it.
