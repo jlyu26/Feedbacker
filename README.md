@@ -7,9 +7,9 @@ An email survey agent based on React, Express and MongoDB.
 ## Setup
 
 1. Download or clone the repo to local direction
-2. Open terminal inside of 'server' folder
-3. Run 'npm install' command to install the dependencies
-4. Run 'npm run dev' command to start the app
+2. Open terminal inside of `server` folder
+3. Run `npm install` command to install the dependencies
+4. Run `npm run dev` command to start the app
 
 ## Services
 
@@ -24,3 +24,4 @@ An email survey agent based on React, Express and MongoDB.
 - Enhance authentication flows in app with Google OAuth authentication
 - Handling payments
 - Survey creation and identifying unique recipients in feedback (using Webhook)
+- Improve query performance of MongoDB (using Redis as cache layer)

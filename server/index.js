@@ -12,6 +12,7 @@ const keys = require('./config/keys');
 require('./models/User');
 require('./models/Survey');
 require('./services/passport');	// Handling authentication
+require('./services/cache');	// Overwrite Mongoose query exec function
 
 //// Setup Mongoose instance
 mongoose.connect(keys.mongoURI);

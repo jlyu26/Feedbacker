@@ -6,16 +6,45 @@ const requireLogin = require('../middlewares/requireLogin');
 const requireCredits = require('../middlewares/requireCredits');
 const Mailer = require('../services/Mailer');
 const surveyTemplate = require('../services/emailTemplates/surveyTemplate');
+const cleanCache = require('../middlewares/cleanCache');
 
 const Survey = mongoose.model('surveys');
 
 module.exports = (app) => {
 	app.get('/api/surveys', requireLogin, async (req, res) => {	// pull the list of surveys created by current user out of database
 		const surveys = await Survey.find({ _user: req.user.id })	// returns a query object of mongoose
-			.select({ recipients: false });	// exclude `recipients` list which could be very big
+			.select({ recipients: false })	// exclude `recipients` list which could be very big
+			.cache({ key: req.user.id });	// cache this particular query
 
 		res.send(surveys);
 	});
+
+	// Caching with Redis:
+	// app.get('/api/surveys', requireLogin, async (req, res) => {
+	// 	const redis = require('redis');
+	// 	const redisUrl = 'redis://127.0.0.1:6379';
+	// 	const client = redis.createClient(redisUrl);
+	// 	const util = require('util');
+	// 	client.get = util.promisify(client.get);
+
+	// 	// Do we have any cached data in redis related to this query?
+	// 	const cachedSurveys = await client.get(req.user.id);
+
+	// 	// If yes, then respond to the request right away in return
+	// 	if (cachedSurveys) {
+	// 		console.log('SERVING FROM CACHE');
+	// 		return res.send(JSON.parse(cachedSurveys));
+	// 	}
+
+	// 	// If no, respond to request and update cache to store the data
+	// 	const surveys = await Survey.find({ _user: req.user.id })
+	// 		.select({ recipients: false });
+
+	// 	console.log('SERVING FROM MONGODB');
+	// 	res.send(surveys);
+
+	// 	client.set(req.user.id, JSON.stringify(surveys));
+	// });
 
 	app.get('/api/surveys/:surveyId/:choice', (req, res) => {	// in production environment remove '/' before 'api/...'
 		res.send('Thanks for your feedback!');
@@ -53,7 +82,7 @@ module.exports = (app) => {
 		res.send({});
 	});
 
-	app.post('/api/surveys', requireLogin, requireCredits, async (req, res) => {
+	app.post('/api/surveys', requireLogin, requireCredits, cleanCache, async (req, res) => {
 		const { title, subject, body, recipients } = req.body;	// ES6 deconstructure
 
 		const survey = new Survey({
