@@ -6,8 +6,8 @@ const mongoose = require('mongoose');
 const redis = require('redis');
 const util = require('util');
 
-const redisUrl = 'redis://127.0.0.1:6379';
-const client = redis.createClient(redisUrl);
+const redisUrl = process.env.REDIS_URL || 'redis://127.0.0.1:6379';
+const client = redis.createClient(redisUrl, {no_ready_check: true});
 client.hget = util.promisify(client.hget);
 // A copy of the origional mongoose function: what is supposed to
 // be executed anytime a query is executed.
@@ -41,6 +41,8 @@ mongoose.Query.prototype.exec = async function() {
 	if (cacheValue) {
 		const doc = JSON.parse(cacheValue);
 
+		console.log('FROM CACHE');
+
 		return Array.isArray(doc)
 			?  doc.map(d => new this.model(d))
 			: new this.model(doc);
@@ -51,7 +53,10 @@ mongoose.Query.prototype.exec = async function() {
 
 	// The windows port of Redis is on 3.0, which has hset() different than hmset
 	// Use hmset() on windows, hset() for other systems
-	client.hmset(this.hashKey, key, JSON.stringify(result), 'EX', 10);
+	client.hmset(this.hashKey, key, JSON.stringify(result));
+	client.expire(this.hashKey, 60);
+
+	console.log('FROM MONGODB');
 
 	return result;
 };

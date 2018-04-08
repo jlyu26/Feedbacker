@@ -18,10 +18,11 @@ An email survey agent based on React, Express and MongoDB.
 - SendGrid - Email delivery [[Visit](https://sendgrid.com/)]
 - LocalTunnel - Webhook [[Visit](https://localtunnel.github.io/www/)]
 - Heroku - Application host [[Visit](https://www.heroku.com/)]
+- redislabs - Redis caching [[Visit](https://redislabs.com/)]
 
 ## Major Challenges
 
-- Enhance authentication flows in app with Google OAuth authentication
+- Enhance authentication flows in app with Google OAuth authentication and test it
 - Handling payments
 - Survey creation and identifying unique recipients in feedback (using Webhook)
 - Improve query performance of MongoDB (using Redis as cache layer)
