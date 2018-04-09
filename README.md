@@ -19,6 +19,7 @@ An email survey agent based on React, Express and MongoDB.
 - LocalTunnel - Webhook [[Visit](https://localtunnel.github.io/www/)]
 - Heroku - Application host [[Visit](https://www.heroku.com/)]
 - redislabs - Redis caching [[Visit](https://redislabs.com/)]
+- Travis CI - CI server [[visit](https://travis-ci.com/)]
 
 ## Major Challenges
 

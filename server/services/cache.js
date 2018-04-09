@@ -5,9 +5,10 @@
 const mongoose = require('mongoose');
 const redis = require('redis');
 const util = require('util');
+const keys = require('../config/keys');
 
-const redisUrl = process.env.REDIS_URL || 'redis://127.0.0.1:6379';
-const client = redis.createClient(redisUrl, {no_ready_check: true});
+// const redisUrl = process.env.REDIS_URL || 'redis://127.0.0.1:6379';
+const client = redis.createClient(keys.redisUrl, {no_ready_check: true});
 client.hget = util.promisify(client.hget);
 // A copy of the origional mongoose function: what is supposed to
 // be executed anytime a query is executed.

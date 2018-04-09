@@ -43,7 +43,8 @@ require('./routes/billingRoutes')(app);
 require('./routes/surveyRoutes')(app);
 
 //// Setup production file serving
-if (process.env.NODE_ENV === 'production') {
+// if (process.env.NODE_ENV === 'production') {
+if (['production', 'ci'].includes(process.env.NODE_ENV)) {
 	// Express will serve up production assets
 	// like our main.js, or main.css file
 	app.use(express.static('client/build'));
