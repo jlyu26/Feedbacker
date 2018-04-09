@@ -44,4 +44,8 @@ Buffer.from(session, 'base64').toString('utf8');
 
 In test flow, we're going to work in reverse. We take an existing user ID and generate a fake session string with it and sign [1] the session object with keygrip [[GitHub](https://github.com/crypto-utils/keygrip)]. After that, we set the session and signature on page instance as cookies.Then we can use that page instance to make a request to the application with cookie sent along, and app server will think the page instance actually is signed in when in fact it is not.
 
-[1] _Session Signature: To figure out whether or not someone has tampered with their session string. Base64 Session + Cookie Signing Key = Session Signature The cookie signing key is a secret string that defined by us (server/config/dev.js) and never shared with anyone outside of application._
+As the login process will be required by almost every test case, we move the authentication logic into a **factory function** [2].
+
+[1] _Session Signature: To figure out whether or not someone has tampered with their session string. (Base64 Session + Cookie Signing Key = Session Signature) The cookie signing key is a secret string that defined by us (server/config/dev.js) and never shared with anyone outside of application._
+
+[2] _Factory Function: a function that is used to generate some test data. To test the application we'll eventually end up with two factory functions inside of the test suite. One 'Session Factory' to create a new session, and one 'User Factory' to create a brand new user for every test._

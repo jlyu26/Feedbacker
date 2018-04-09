@@ -1,22 +1,29 @@
-const puppeteer = require('puppeteer');
+// const puppeteer = require('puppeteer');
+// const sessionFactory = require('./factories/sessionFactory');
+// const userFactory = require('./factories/userFactory');
+const Page = require('./helpers/page');
 
-let browser, page;	// make the two variable global
+// let browser, page;	// make the two variable global
+let page;
 
 beforeEach(async () => {
-	browser = await puppeteer.launch({
-		headless: false
-	});
-	page = await browser.newPage();
+	// browser = await puppeteer.launch({
+	// 	headless: false
+	// });
+	// page = await browser.newPage();
+	page = await Page.build();
 	await page.goto('localhost:3000');
 });
 
 afterEach(async () => {
 	// await browser.close();
+	await page.close();
 });
 
 test('the header has the correct text', async () => {
 	// nothing special with $ sign below, it's not jQuery but puppyteer page function
-	const text = await page.$eval('a.brand-logo', el => el.innerHTML);
+	// const text = await page.$eval('a.brand-logo', el => el.innerHTML);
+	const text = await page.getContentsOf('a.brand-logo');
 
 	expect(text).toEqual('Feedbacker');
 });
@@ -29,25 +36,18 @@ test('clicking login starts oauth flow', async () => {
 	expect(url).toMatch(/accounts\.google\.com/);
 });
 
-test.only('when signed in, shows logout button', async () => {
-	const id = '5a87be4d8463991f64fb225c';
+test('when signed in, shows logout button', async () => {
+	// const user = await userFactory();
+	// const { session, sig } = sessionFactory(user);
 
-	const Buffer = require('safe-buffer').Buffer;
-	const sessionObject = {
-		passport: {
-			user: id
-		}
-	};
-	const sessionString = Buffer.from(
-		JSON.stringify(sessionObject)
-	).toString('base64');
+	// await page.setCookie({ name: 'session', value: session });
+	// await page.setCookie({ name: 'session.sig', value: sig });
+	// await page.goto('localhost:3000');
+	// await page.waitFor('a[href="/api/logout"]');
 
-	const Keygrip = require('keygrip');
-	const keys = require('../config/keys');
-	const keygrip = new Keygrip([keys.cookieKey]);
-	const sig = keygrip.sign('session=' + sessionString);
+	await page.login();
 
-	await page.setCookie({ name: 'session', value: sessionString });
-	await page.setCookie({ name: 'session.sig', value: sig });
-	await page.goto('localhost:3000');
+	const text = await page.getContentsOf('a[href="/api/logout"]');
+
+	expect(text).toEqual('Logout');
 });
