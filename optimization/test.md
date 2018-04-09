@@ -1,5 +1,9 @@
 ## Testing
 
+### Why Jest
+
+One big advantage is Jest will run test suites in parallel as long as they're split into separate files. So if we put test cases into many small files, it will run faster.
+
 ### Unit and Integration Testing
 
 Unit Testing: Take one single piece of application (a single function, a model, a single route handler) and test it in isolation to make sure that it's working the way as expect.

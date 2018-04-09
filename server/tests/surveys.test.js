@@ -39,7 +39,9 @@ describe('when logged in', async () => {
 		});
 
 		// fails, timeout error, no click event observed
-		// might related to the 'need credit' check
+		// might related to the 'need credit' check, but
+		// click 'Back' button test , which don't need credit
+		// to be at least 0, also fails...
 		test.skip('submitting then saving adds survey to index page', async () => {
 			await page.click('button.green');			
 			await page.waitFor('.card');
@@ -71,4 +73,45 @@ describe('when logged in', async () => {
 		});
 	});
 
+});
+
+
+describe('user is not logged in', async () => {
+	test('user cannot create surveys', async () => {
+		const result = await page.evaluate(
+			() => {
+				return fetch('/api/surveys', {
+					method: 'POST',
+					credentials: 'same-origin',
+					headers: {
+						'Content-Type': 'application/json'
+					},
+					body: JSON.stringify({
+						title: 'My title',
+						subject: 'My Subject',
+						body: 'My Body',
+						recipients: 'jlyu@wpi.edu'
+					})
+				}).then(res => res.json());
+			}
+		);
+
+		expect(result).toEqual({ error: 'You must login!' });
+	});
+
+	test('user cannot get a list of survey', async () => {
+		const result = await page.evaluate(
+			() => {
+				return fetch('/api/surveys', {
+					method: 'GET',
+					credentials: 'same-origin',
+					headers: {
+						'Content-Type': 'application/json'
+					}
+				}).then(res => res.json());
+			}
+		);
+
+		expect(result).toEqual({ error: 'You must login!' });
+	});
 });
