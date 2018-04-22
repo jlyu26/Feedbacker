@@ -27,7 +27,7 @@ Challenges:
 Many further test process will require to be logged in. After clicking the 'Login with Google' button, the page will be redirected to the google accounts page. If we write test code to find a certain account and click that to login, in local machine that will probably be OK. However when take the entire testing setup and push it onto a continuous integration (CI) server to run the tests automatically in some isolated environment off local server, as soon as Google detect we logging into an account from a machine that we never login before, and many test instances trying to login at the same time, Google's authentication service starts to get suspecious and show us CAPTCHAs (**C**ompletely **A**utomated **P**ublic **T**uring test to tell **C**omputers and **H**umans **A**part).
 
 | Suggestion        | Thoughts           |
-| ------------- |:-------------:|
+| ------------- |-------------|
 | Make a secret route on the server that automatically logs in Chromium browser | Bad practice to change server code just to make test suite work |
 | When tests are running, don't require quthentication | Server is running 100% separately from test suite. Can't easily change the server only when tests are running |
 | Convince the server that Chromium browser is logged into the app by **faking a session** | √ Will not only work for Google but also every other oauth provider |
