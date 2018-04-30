@@ -1,6 +1,6 @@
 <p align="center">
   <img src="https://user-images.githubusercontent.com/20265633/39453656-e147dbde-4ca4-11e8-9688-42a39432806a.png">
-  <p align="center"><strong>An email survey agent based on React, Express and MongoDB.</strong></p>
+  <p align="center">An email survey agent based on React, Express and MongoDB.</p>
 </p>
 
 ---
@@ -10,7 +10,7 @@
 
 **Screenshot:**
 
-<img width="864" alt="screen-shot" src="https://user-images.githubusercontent.com/20265633/39454470-70b94f2e-4ca9-11e8-9fac-9a7fe6a49b60.PNG">
+<img width="860" alt="screen-shot" src="https://user-images.githubusercontent.com/20265633/39455005-49ab74c2-4cac-11e8-95b2-017fcc3a364c.PNG">
 
 ## Setup
 
