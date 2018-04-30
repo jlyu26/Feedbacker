@@ -23,11 +23,12 @@ class Header extends Component {
 
 	render() {
 		return (
-			<nav>
+			<nav style={{ backgroundColor: 'rgba(0, 0, 0, 0.75)'}}>
 			    <div className="nav-wrapper">
 			    	<Link 
 				    	to={this.props.auth ? '/surveys' : '/'} 
 				    	className="left brand-logo"
+				    	style={{ fontFamily: 'Marck Script', marginLeft: '10px' }}
 			    	>
 			    		Feedbacker
 			    	</Link>

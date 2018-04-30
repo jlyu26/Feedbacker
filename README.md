@@ -1,11 +1,16 @@
-# Feedbacker
+<p align="center">
+  <img src="https://user-images.githubusercontent.com/20265633/39453656-e147dbde-4ca4-11e8-9688-42a39432806a.png">
+  <p>An email survey agent based on React, Express and MongoDB.</p>
+</p>
+
+---
 
 [![Build Status](https://travis-ci.org/jlyu26/Feedbacker.svg?branch=master)](https://travis-ci.org/jlyu26/Feedbacker)
 [![Maintainability](https://api.codeclimate.com/v1/badges/e1c6b1dcff6748bbdd5d/maintainability)](https://codeclimate.com/github/jlyu26/Feedbacker/maintainability)
 
-An email survey agent based on React, Express and MongoDB.
+**Screenshot:**
 
-<img width="342" alt="user-workflow" src="https://user-images.githubusercontent.com/20265633/36164746-54797ebc-10bb-11e8-9079-914162e2bb87.PNG">
+<img width="864" alt="screen-shot" src="https://user-images.githubusercontent.com/20265633/39454470-70b94f2e-4ca9-11e8-9fac-9a7fe6a49b60.PNG">
 
 ## Setup
 
