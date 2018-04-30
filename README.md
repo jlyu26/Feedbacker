@@ -1,6 +1,6 @@
 <p align="center">
   <img src="https://user-images.githubusercontent.com/20265633/39453656-e147dbde-4ca4-11e8-9688-42a39432806a.png">
-  <p>An email survey agent based on React, Express and MongoDB.</p>
+  <p align="center"><strong>An email survey agent based on React, Express and MongoDB.</strong></p>
 </p>
 
 ---
